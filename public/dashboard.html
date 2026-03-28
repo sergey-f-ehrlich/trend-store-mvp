@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — OpenClaw Trend Store</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="/"><span class="brand-badge">🌀</span><span>OpenClaw Trend Store</span></a>
+      <nav class="nav-links">
+        <a data-nav href="/">Home</a>
+        <a data-nav href="/catalog">Catalog</a>
+        <a data-nav href="/dashboard">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section" style="padding-top: 44px;">
+      <div class="section-header">
+        <div>
+          <span class="eyebrow">Operator dashboard</span>
+          <h1 style="font-size: clamp(2rem, 4vw, 3.4rem); margin-top: 16px;">Opportunity scoring at a glance</h1>
+          <p class="lead">A compact admin-like view for comparing product bets, category quality, and revenue potential.</p>
+        </div>
+      </div>
+      <div id="dashboard-metrics" class="metrics-grid"></div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="dashboard-grid">
+        <article class="card table-card">
+          <div class="section-header" style="margin-bottom: 0;">
+            <div>
+              <h2>Product ranking</h2>
+              <p class="muted">Sorted by weighted opportunity score.</p>
+            </div>
+          </div>
+          <table class="table">
+            <thead>
+              <tr><th>Rank</th><th>Product</th><th>Category</th><th>Score</th><th>Revenue</th><th>Margin</th></tr>
+            </thead>
+            <tbody id="ranking-table"></tbody>
+          </table>
+        </article>
+        <div>
+          <div class="section-header" style="margin-bottom: 14px;">
+            <div>
+              <h2>Category health</h2>
+              <p class="muted">Average score by niche cluster.</p>
+            </div>
+          </div>
+          <div id="category-breakdown" style="display: grid; gap: 16px;"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer">Built for fast product selection, not spreadsheet pain.</footer>
+  <script src="/assets/data.js"></script>
+  <script src="/assets/app.js"></script>
+</body>
+</html>

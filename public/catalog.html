@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catalog — OpenClaw Trend Store</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="/"><span class="brand-badge">🌀</span><span>OpenClaw Trend Store</span></a>
+      <nav class="nav-links">
+        <a data-nav href="/">Home</a>
+        <a data-nav href="/catalog">Catalog</a>
+        <a data-nav href="/dashboard">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section" style="padding-top: 44px;">
+      <div class="section-header">
+        <div>
+          <span class="eyebrow">Catalog</span>
+          <h1 style="font-size: clamp(2rem, 4vw, 3.4rem); margin-top: 16px;">Browse the opportunity set</h1>
+          <p class="lead">Filter by category, search by use case, and sort by opportunity score, price, or rating.</p>
+        </div>
+      </div>
+      <div class="card filter-card">
+        <input id="search-input" class="input" type="search" placeholder="Search products, use cases, audiences..." />
+        <select id="category-select" class="select"></select>
+        <select id="sort-select" class="select">
+          <option value="score">Sort: opportunity score</option>
+          <option value="rating">Sort: rating</option>
+          <option value="price-low">Sort: price low to high</option>
+          <option value="price-high">Sort: price high to low</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div id="catalog-grid" class="product-grid"></div>
+    </section>
+  </main>
+
+  <footer class="container footer">Use this page like a lightweight buyer’s shortlist.</footer>
+  <script src="/assets/data.js"></script>
+  <script src="/assets/app.js"></script>
+</body>
+</html>

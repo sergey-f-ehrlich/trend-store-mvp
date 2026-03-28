@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenClaw Trend Store</title>
+  <meta name="description" content="A trend-led storefront MVP with product opportunities and dashboard scoring." />
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="/">
+        <span class="brand-badge">🌀</span>
+        <span>OpenClaw Trend Store</span>
+      </a>
+      <nav class="nav-links">
+        <a data-nav href="/">Home</a>
+        <a data-nav href="/catalog">Catalog</a>
+        <a data-nav href="/dashboard">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="hero-grid">
+        <article class="card hero-copy">
+          <span class="eyebrow">Trend-first storefront MVP</span>
+          <h1>Find products with signal, not guesswork.</h1>
+          <p class="lead">OpenClaw Trend Store is a compact ecommerce concept built around opportunity scoring. Browse products, explore categories, and inspect the metrics behind what looks commercially promising.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="/catalog">Explore catalog</a>
+            <a class="button secondary" href="/dashboard">Open dashboard</a>
+          </div>
+          <div class="stats-grid" style="margin-top: 24px;">
+            <div class="card stat"><strong>6</strong><span class="muted">Seed opportunities</span></div>
+            <div class="card stat"><strong>4</strong><span class="muted">Curated categories</span></div>
+            <div class="card stat"><strong>100</strong><span class="muted">Point scoring scale</span></div>
+          </div>
+        </article>
+        <aside class="card visual-panel">
+          <div class="mini-card">
+            <div class="inline-meta" style="justify-content: space-between;"><span class="muted">Best current opportunity</span><span class="score">Top ranked</span></div>
+            <h3 style="margin-top: 14px;">Steam Prep Bowl</h3>
+            <p class="muted">Strong demand momentum, viral utility, and easy-to-demo value.</p>
+          </div>
+          <div class="visual-stack">
+            <div class="mini-card"><strong>Demand</strong><div class="progress" style="margin-top: 10px;"><span style="width:88%"></span></div></div>
+            <div class="mini-card"><strong>Margin</strong><div class="progress" style="margin-top: 10px;"><span style="width:81%"></span></div></div>
+            <div class="mini-card"><strong>Operational ease</strong><div class="progress" style="margin-top: 10px;"><span style="width:84%"></span></div></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section container">
+      <div class="section-header">
+        <div>
+          <h2>Featured opportunities</h2>
+          <p class="muted">A starter assortment chosen for strong content potential, straightforward merchandising, and credible economics.</p>
+        </div>
+        <a class="button secondary" href="/catalog">See full assortment</a>
+      </div>
+      <div id="featured-products" class="product-grid"></div>
+    </section>
+
+    <section class="section container">
+      <div class="section-header">
+        <div>
+          <h2>Category map</h2>
+          <p class="muted">Neutral, modern niches with broad appeal and low-explainer product hooks.</p>
+        </div>
+      </div>
+      <div id="category-grid" class="grid-4"></div>
+    </section>
+
+    <section class="section container">
+      <div class="grid-3">
+        <article class="card section-card">
+          <h3>Merchandising focus</h3>
+          <p class="muted">Each item is framed around a clear transformation: cleaner desks, simpler meal prep, easier recovery, or happier pets.</p>
+        </article>
+        <article class="card section-card">
+          <h3>Operational logic</h3>
+          <p class="muted">The assortment prioritizes compact products, low breakage risk, and bundle potential for higher average order value.</p>
+        </article>
+        <article class="card section-card">
+          <h3>Decision support</h3>
+          <p class="muted">The dashboard surfaces weighted opportunity scores so early product bets feel a little less random.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer">OpenClaw Trend Store MVP — clean storefront, seeded catalog, and opportunity dashboard.</footer>
+  <script src="/assets/data.js"></script>
+  <script src="/assets/app.js"></script>
+</body>
+</html>
