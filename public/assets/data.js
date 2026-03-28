@@ -1,4 +1,11 @@
 (function () {
+  const brand = {
+    name: 'Northstar Goods',
+    mark: '✦',
+    tagline: 'Modern essentials with a trend-led eye',
+    supportEmail: 'hello@northstargoods.co'
+  };
+
   const categories = [
     {
       id: 'workspace',
@@ -33,6 +40,7 @@
       reviews: 412,
       badge: 'Rising fast',
       image: '💡',
+      imageStyle: 'linear-gradient(135deg, #6aa4ff 0%, #2d3f85 100%)',
       shortDescription: 'A premium desk mat with soft edge lighting and cable routing slots.',
       description: 'The Glow Desk Pad turns a plain workstation into a cleaner, more premium setup. It combines visual appeal with practical features like cable channels, spill-resistant coating, and enough surface area for a keyboard, mouse, and notebook.',
       highlights: ['RGB edge glow with warm-to-cool presets', 'Water-resistant vegan leather surface', 'Integrated cable routing channels'],
@@ -50,6 +58,7 @@
       reviews: 286,
       badge: 'High margin',
       image: '🧘',
+      imageStyle: 'linear-gradient(135deg, #6fe7cc 0%, #1f7b6d 100%)',
       shortDescription: 'A lightweight posture cue band designed for short daily correction sessions.',
       description: 'Pulse Posture Band is positioned as a habit-forming recovery accessory. The product is easy to understand, visually demonstrable, and ideal for short-form content that shows before/after posture improvement and desk fatigue relief.',
       highlights: ['Adjustable for all-day comfort', 'Simple 10-minute routine positioning', 'Compact packaging and easy returns handling'],
@@ -67,6 +76,7 @@
       reviews: 501,
       badge: 'Viral utility',
       image: '🥗',
+      imageStyle: 'linear-gradient(135deg, #ffb86b 0%, #a24e1c 100%)',
       shortDescription: 'A microwave-safe prep bowl with steam venting and built-in draining lid.',
       description: 'Steam Prep Bowl solves a very visible kitchen problem: quick meal prep without extra dishes. The built-in strainer lid and portion-friendly shape make it easy to demo, especially for busy professionals and small households.',
       highlights: ['Microwave-safe with steam-release vent', 'Snap-on strainer lid for easy draining', 'Compact stackable form for bundles'],
@@ -84,6 +94,7 @@
       reviews: 367,
       badge: 'Evergreen',
       image: '🐾',
+      imageStyle: 'linear-gradient(135deg, #ff9fd0 0%, #8147c2 100%)',
       shortDescription: 'A plush calming donut bed built for anxious pets and cozy interiors.',
       description: 'Calm Pet Bed benefits from emotional merchandising and highly relatable product visuals. It is especially strong for content showing pet comfort, home aesthetic fit, and seasonal lifestyle positioning.',
       highlights: ['Soft raised rim for nesting comfort', 'Machine-washable removable cover', 'Neutral color palette for home-friendly styling'],
@@ -101,6 +112,7 @@
       reviews: 198,
       badge: 'Repeat-friendly',
       image: '💧',
+      imageStyle: 'linear-gradient(135deg, #7dc8ff 0%, #2d6cb3 100%)',
       shortDescription: 'A hydration bottle with time markers, removable infuser, and carry loop.',
       description: 'SipTrack Bottle is a low-explainer product with broad audience appeal. It performs well in habit-building creative and benefits from add-on sales like sleeves, caps, or flavor infusers.',
       highlights: ['Time markers for all-day hydration goals', 'Fruit infuser insert included', 'Accessory upsell potential'],
@@ -118,6 +130,7 @@
       reviews: 254,
       badge: 'Bundle winner',
       image: '🗂️',
+      imageStyle: 'linear-gradient(135deg, #9a92ff 0%, #4048a8 100%)',
       shortDescription: 'A modular cable, pen, and accessory tray system for tidier desks.',
       description: 'Snap Organizer Set wins on transformation-style visuals and practical gifting. It is easy to bundle, easy to understand, and sits nicely beside other productivity accessories in the same niche.',
       highlights: ['Magnetic modular tray layout', 'Fits cables, pens, adapters, and earbuds', 'Strong gifting and bundle positioning'],
@@ -171,6 +184,7 @@
   }
 
   window.TrendStoreData = {
+    brand,
     categories,
     products: enrichedProducts,
     weights,

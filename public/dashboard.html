@@ -3,64 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard — OpenClaw Trend Store</title>
+  <title>Insights — Northstar Goods</title>
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
+  <div class="announcement-bar"><div class="container announcement-inner"><span>Northstar Goods internal merchandising view</span></div></div>
   <header class="topbar">
     <div class="container nav">
-      <a class="brand" href="index.html"><span class="brand-badge">🌀</span><span>OpenClaw Trend Store</span></a>
+      <a class="brand" href="index.html"><span class="brand-badge" data-brand-mark>✦</span><span data-brand-name>Northstar Goods</span></a>
       <nav class="nav-links">
         <a data-nav href="index.html">Home</a>
-        <a data-nav href="catalog.html">Catalog</a>
-        <a data-nav href="dashboard.html">Dashboard</a>
+        <a data-nav href="catalog.html">Shop</a>
+        <a data-nav href="dashboard.html">Insights</a>
       </nav>
+      <div class="nav-actions"><button class="nav-icon" data-open-cart aria-label="Open cart">🛍️<span id="cart-count" class="cart-count">0</span></button></div>
     </div>
   </header>
 
   <main class="container">
-    <section class="section" style="padding-top: 44px;">
-      <div class="section-header">
-        <div>
-          <span class="eyebrow">Operator dashboard</span>
-          <h1 style="font-size: clamp(2rem, 4vw, 3.4rem); margin-top: 16px;">Opportunity scoring at a glance</h1>
-          <p class="lead">A compact admin-like view for comparing product bets, category quality, and revenue potential.</p>
-        </div>
+    <section class="page-hero">
+      <div class="page-copy">
+        <span class="eyebrow">Internal view</span>
+        <h1>Merchandising insights</h1>
+        <p class="lead">A compact operator-style dashboard for comparing product bets, category quality, and modeled revenue potential.</p>
       </div>
+    </section>
+    <section class="section" style="padding-top: 0;">
       <div id="dashboard-metrics" class="metrics-grid"></div>
     </section>
-
     <section class="section" style="padding-top: 0;">
       <div class="dashboard-grid">
         <article class="card table-card">
-          <div class="section-header" style="margin-bottom: 0;">
-            <div>
-              <h2>Product ranking</h2>
-              <p class="muted">Sorted by weighted opportunity score.</p>
-            </div>
-          </div>
+          <div class="section-header" style="margin-bottom: 0;"><div><h2>Product ranking</h2><p class="muted">Sorted by weighted opportunity score.</p></div></div>
           <table class="table">
-            <thead>
-              <tr><th>Rank</th><th>Product</th><th>Category</th><th>Score</th><th>Revenue</th><th>Margin</th></tr>
-            </thead>
+            <thead><tr><th>Rank</th><th>Product</th><th>Category</th><th>Score</th><th>Revenue</th><th>Margin</th></tr></thead>
             <tbody id="ranking-table"></tbody>
           </table>
         </article>
         <div>
-          <div class="section-header" style="margin-bottom: 14px;">
-            <div>
-              <h2>Category health</h2>
-              <p class="muted">Average score by niche cluster.</p>
-            </div>
-          </div>
-          <div id="category-breakdown" style="display: grid; gap: 16px;"></div>
+          <div class="section-header" style="margin-bottom: 14px;"><div><h2>Category health</h2><p class="muted">Average score by niche cluster.</p></div></div>
+          <div id="category-breakdown" style="display:grid;gap:16px;"></div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="container footer">Built for fast product selection, not spreadsheet pain.</footer>
-  <script src="/assets/data.js"></script>
-  <script src="/assets/app.js"></script>
+  <footer class="container footer footer-store"><div><strong data-brand-name>Northstar Goods</strong></div></footer>
+
+  <div id="cart-overlay" class="cart-overlay"></div>
+  <aside class="cart-drawer" aria-label="Shopping cart">
+    <div class="cart-header"><div class="cart-title-row"><strong>Your cart</strong><button id="cart-close" class="cart-close">×</button></div></div>
+    <div id="cart-items" class="cart-items"></div>
+    <div class="cart-footer"><div class="cart-summary-row"><span>Subtotal</span><strong id="cart-subtotal">$0</strong></div><a class="button primary" href="contact.html" style="width:100%;">Proceed to checkout</a></div>
+  </aside>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
 </body>
 </html>

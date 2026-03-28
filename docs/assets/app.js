@@ -1,5 +1,6 @@
 (function () {
   const data = window.TrendStoreData;
+  const cartKey = 'northstar-cart';
 
   function el(id) {
     return document.getElementById(id);
@@ -9,11 +10,54 @@
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
   }
 
+  function productImage(product, large = false) {
+    return `<div class="product-image ${large ? 'large' : ''}" style="background:${product.imageStyle}"><span>${product.image}</span></div>`;
+  }
+
+  function getCart() {
+    try {
+      return JSON.parse(localStorage.getItem(cartKey) || '[]');
+    } catch {
+      return [];
+    }
+  }
+
+  function saveCart(cart) {
+    localStorage.setItem(cartKey, JSON.stringify(cart));
+  }
+
+  function addToCart(productId) {
+    const cart = getCart();
+    const existing = cart.find((item) => item.id === productId);
+    if (existing) existing.qty += 1;
+    else cart.push({ id: productId, qty: 1 });
+    saveCart(cart);
+    updateCartUi();
+    openCart();
+  }
+
+  function removeFromCart(productId) {
+    const cart = getCart().filter((item) => item.id !== productId);
+    saveCart(cart);
+    updateCartUi();
+  }
+
+  function cartSummary() {
+    const cart = getCart();
+    const items = cart.map((entry) => {
+      const product = data.getProduct(entry.id);
+      return product ? { ...product, qty: entry.qty } : null;
+    }).filter(Boolean);
+    const count = items.reduce((sum, item) => sum + item.qty, 0);
+    const subtotal = items.reduce((sum, item) => sum + item.qty * item.price, 0);
+    return { items, count, subtotal };
+  }
+
   function productCard(product) {
     const category = data.getCategory(product.category);
     return `
       <article class="card product-card">
-        <div class="product-emoji">${product.image}</div>
+        ${productImage(product)}
         <div class="badge">${product.badge}</div>
         <h3>${product.name}</h3>
         <p class="muted">${product.shortDescription}</p>
@@ -27,8 +71,11 @@
           <span>${product.reviews} reviews</span>
         </div>
         <div class="button-row" style="justify-content: space-between; align-items: center; margin-top: 18px;">
-          <span class="score">Score ${product.opportunityScore}</span>
-          <a class="button secondary" href="product.html?id=${product.id}">View details</a>
+          <span class="score">Top pick ${product.opportunityScore}</span>
+          <div class="button-row compact-row">
+            <a class="button secondary" href="product.html?id=${product.id}">Details</a>
+            <button class="button primary add-to-cart" data-add-cart="${product.id}">Add to cart</button>
+          </div>
         </div>
       </article>
     `;
@@ -47,7 +94,7 @@
       const count = data.products.filter((product) => product.category === category.id).length;
       return `
         <article class="card section-card">
-          <div class="pill">${count} opportunities</div>
+          <div class="pill">${count} products</div>
           <h3 style="margin-top: 14px;">${category.name}</h3>
           <p class="muted">${category.blurb}</p>
           <a class="button secondary" href="catalog.html?category=${category.id}">Browse category</a>
@@ -91,6 +138,7 @@
       });
 
       grid.innerHTML = items.length ? items.map(productCard).join('') : '<div class="card empty-state">No products matched those filters.</div>';
+      bindCartButtons();
     }
 
     [search, categorySelect, sortSelect].forEach((node) => node.addEventListener('input', applyFilters));
@@ -116,36 +164,47 @@
     ];
 
     target.innerHTML = `
-      <section class="detail-grid">
+      <section class="detail-grid detail-grid-store">
         <article class="card detail-hero">
-          <div class="product-emoji">${product.image}</div>
-          <div class="inline-meta"><span class="badge">${product.badge}</span><span>${category.name}</span><span>★ ${product.rating}</span></div>
+          ${productImage(product, true)}
+          <div class="inline-meta"><span class="badge">${product.badge}</span><span>${category.name}</span><span>★ ${product.rating}</span><span>${product.reviews} reviews</span></div>
           <h1 style="font-size: clamp(2rem, 4vw, 3.4rem); margin-top: 16px;">${product.name}</h1>
           <p class="lead">${product.description}</p>
           <div class="price-row">
             <span class="price">${currency(product.price)}</span>
             <span class="compare">${currency(product.compareAt)}</span>
-            <span class="score">Opportunity ${product.opportunityScore}</span>
+            <span class="score">Best seller score ${product.opportunityScore}</span>
+          </div>
+          <div class="purchase-box">
+            <div>
+              <strong>In stock</strong>
+              <div class="muted">Ships in 1–2 business days</div>
+            </div>
+            <button class="button primary add-to-cart" data-add-cart="${product.id}">Add to cart</button>
           </div>
           <div class="button-row">
-            <a class="button primary" href="catalog.html">Back to catalog</a>
-            <a class="button secondary" href="dashboard.html">View dashboard</a>
+            <a class="button secondary" href="catalog.html">Back to shop</a>
+            <a class="button secondary" href="faq.html">Questions?</a>
           </div>
         </article>
 
         <div style="display: grid; gap: 18px;">
           <article class="card section-card">
-            <h3>Why it works</h3>
+            <h3>Why customers like it</h3>
             <ul class="list">${product.highlights.map((item) => `<li>${item}</li>`).join('')}</ul>
           </article>
           <article class="card section-card">
-            <h3>Commercial snapshot</h3>
+            <h3>Store snapshot</h3>
             <div class="metrics-grid" style="grid-template-columns: repeat(2, 1fr);">
-              <div class="metric-card"><strong>${currency(product.monthlyRevenue)}</strong><span class="muted">Est. monthly revenue</span></div>
+              <div class="metric-card"><strong>${currency(product.monthlyRevenue)}</strong><span class="muted">Modeled revenue</span></div>
               <div class="metric-card"><strong>${product.grossMargin}%</strong><span class="muted">Gross margin</span></div>
-              <div class="metric-card"><strong>${product.conversionLift}%</strong><span class="muted">Conv. lift potential</span></div>
-              <div class="metric-card"><strong>${product.reviews}</strong><span class="muted">Seed social proof</span></div>
+              <div class="metric-card"><strong>${product.conversionLift}%</strong><span class="muted">Conv. lift</span></div>
+              <div class="metric-card"><strong>${product.reviews}</strong><span class="muted">Reviews</span></div>
             </div>
+          </article>
+          <article class="card section-card">
+            <h3>Shipping & returns</h3>
+            <p class="muted">${product.shippingProfile} Free shipping available over $50. 30-day returns on unused items.</p>
           </article>
         </div>
       </section>
@@ -153,8 +212,8 @@
       <section class="section">
         <div class="section-header">
           <div>
-            <h2>Opportunity score breakdown</h2>
-            <p class="muted">Seed logic combines demand, margin, ease, operational risk, repeat purchase, and social momentum.</p>
+            <h2>Feature breakdown</h2>
+            <p class="muted">A more storefront-style explanation of what makes this product compelling.</p>
           </div>
         </div>
         <div class="grid-3">
@@ -169,12 +228,13 @@
 
       <section class="section">
         <div class="grid-3">
-          <article class="card section-card"><h3>Audience</h3><p class="muted">${product.audience}</p></article>
+          <article class="card section-card"><h3>Best for</h3><p class="muted">${product.audience}</p></article>
           <article class="card section-card"><h3>Shipping profile</h3><p class="muted">${product.shippingProfile}</p></article>
-          <article class="card section-card"><h3>Merchandising angle</h3><p class="muted">Lead with a clear before/after transformation, daily utility, and a tight value proposition around convenience.</p></article>
+          <article class="card section-card"><h3>Why it converts</h3><p class="muted">Clear utility, visual demo potential, and simple everyday positioning make this feel easy to buy.</p></article>
         </div>
       </section>
     `;
+    bindCartButtons();
   }
 
   function renderDashboard() {
@@ -190,10 +250,10 @@
     const avgRating = (products.reduce((sum, product) => sum + product.rating, 0) / products.length).toFixed(1);
 
     metricsTarget.innerHTML = `
-      <article class="card metric-card"><strong>${avgScore}</strong><span class="muted">Average opportunity score</span></article>
-      <article class="card metric-card"><strong>${currency(totalRevenue)}</strong><span class="muted">Projected portfolio revenue</span></article>
-      <article class="card metric-card"><strong>${bestMargin}%</strong><span class="muted">Best gross margin</span></article>
-      <article class="card metric-card"><strong>${avgRating}</strong><span class="muted">Average customer rating</span></article>
+      <article class="card metric-card"><strong>${avgScore}</strong><span class="muted">Average score</span></article>
+      <article class="card metric-card"><strong>${currency(totalRevenue)}</strong><span class="muted">Modeled revenue</span></article>
+      <article class="card metric-card"><strong>${bestMargin}%</strong><span class="muted">Best margin</span></article>
+      <article class="card metric-card"><strong>${avgRating}</strong><span class="muted">Average rating</span></article>
     `;
 
     tableTarget.innerHTML = products.map((product, index) => `
@@ -223,6 +283,58 @@
     }).join('');
   }
 
+  function updateBranding() {
+    document.querySelectorAll('[data-brand-name]').forEach((node) => { node.textContent = data.brand.name; });
+    document.querySelectorAll('[data-brand-mark]').forEach((node) => { node.textContent = data.brand.mark; });
+  }
+
+  function openCart() {
+    document.body.classList.add('cart-open');
+  }
+
+  function closeCart() {
+    document.body.classList.remove('cart-open');
+  }
+
+  function updateCartUi() {
+    const badge = el('cart-count');
+    const drawerItems = el('cart-items');
+    const subtotalNode = el('cart-subtotal');
+    const summary = cartSummary();
+    if (badge) badge.textContent = summary.count;
+    if (subtotalNode) subtotalNode.textContent = currency(summary.subtotal);
+    if (drawerItems) {
+      drawerItems.innerHTML = summary.items.length ? summary.items.map((item) => `
+        <div class="cart-item">
+          <div class="cart-item-media" style="background:${item.imageStyle}"><span>${item.image}</span></div>
+          <div>
+            <strong>${item.name}</strong>
+            <div class="muted">Qty ${item.qty} • ${currency(item.price)}</div>
+          </div>
+          <button class="cart-remove" data-remove-cart="${item.id}">×</button>
+        </div>
+      `).join('') : '<div class="muted">Your cart is empty.</div>';
+      drawerItems.querySelectorAll('[data-remove-cart]').forEach((button) => {
+        button.addEventListener('click', () => removeFromCart(button.getAttribute('data-remove-cart')));
+      });
+    }
+  }
+
+  function bindCartButtons() {
+    document.querySelectorAll('[data-add-cart]').forEach((button) => {
+      button.onclick = () => addToCart(button.getAttribute('data-add-cart'));
+    });
+  }
+
+  function bindShell() {
+    const openers = document.querySelectorAll('[data-open-cart]');
+    const closer = el('cart-close');
+    const overlay = el('cart-overlay');
+    openers.forEach((node) => node.addEventListener('click', openCart));
+    if (closer) closer.addEventListener('click', closeCart);
+    if (overlay) overlay.addEventListener('click', closeCart);
+  }
+
   function markActiveNav() {
     const path = window.location.pathname;
     document.querySelectorAll('[data-nav]').forEach((link) => {
@@ -235,11 +347,15 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    updateBranding();
+    bindShell();
     markActiveNav();
     renderFeatured();
     renderCategories();
     renderCatalog();
     renderProductDetail();
     renderDashboard();
+    bindCartButtons();
+    updateCartUi();
   });
 })();

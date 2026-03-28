@@ -3,49 +3,62 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Catalog — OpenClaw Trend Store</title>
+  <title>Shop — Northstar Goods</title>
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
+  <div class="announcement-bar"><div class="container announcement-inner"><span>Free shipping on orders over $50</span><span>•</span><span>30-day returns</span><span>•</span><span>Curated weekly drops</span></div></div>
   <header class="topbar">
     <div class="container nav">
-      <a class="brand" href="index.html"><span class="brand-badge">🌀</span><span>OpenClaw Trend Store</span></a>
+      <a class="brand" href="index.html"><span class="brand-badge" data-brand-mark>✦</span><span data-brand-name>Northstar Goods</span></a>
       <nav class="nav-links">
         <a data-nav href="index.html">Home</a>
-        <a data-nav href="catalog.html">Catalog</a>
-        <a data-nav href="dashboard.html">Dashboard</a>
+        <a data-nav href="catalog.html">Shop</a>
+        <a data-nav href="faq.html">FAQ</a>
+        <a data-nav href="contact.html">Contact</a>
       </nav>
+      <div class="nav-actions"><button class="nav-icon" data-open-cart aria-label="Open cart">🛍️<span id="cart-count" class="cart-count">0</span></button></div>
     </div>
   </header>
 
   <main class="container">
-    <section class="section" style="padding-top: 44px;">
-      <div class="section-header">
-        <div>
-          <span class="eyebrow">Catalog</span>
-          <h1 style="font-size: clamp(2rem, 4vw, 3.4rem); margin-top: 16px;">Browse the opportunity set</h1>
-          <p class="lead">Filter by category, search by use case, and sort by opportunity score, price, or rating.</p>
-        </div>
+    <section class="page-hero">
+      <div class="page-copy">
+        <span class="eyebrow">Shop all</span>
+        <h1>Browse the collection</h1>
+        <p class="lead">Filter by category, search by use case, and shop products in a more realistic store layout.</p>
       </div>
+    </section>
+    <section class="section" style="padding-top: 0;">
       <div class="card filter-card">
         <input id="search-input" class="input" type="search" placeholder="Search products, use cases, audiences..." />
         <select id="category-select" class="select"></select>
         <select id="sort-select" class="select">
-          <option value="score">Sort: opportunity score</option>
+          <option value="score">Sort: best sellers</option>
           <option value="rating">Sort: rating</option>
           <option value="price-low">Sort: price low to high</option>
           <option value="price-high">Sort: price high to low</option>
         </select>
       </div>
     </section>
-
     <section class="section" style="padding-top: 0;">
       <div id="catalog-grid" class="product-grid"></div>
     </section>
   </main>
 
-  <footer class="container footer">Use this page like a lightweight buyer’s shortlist.</footer>
-  <script src="/assets/data.js"></script>
-  <script src="/assets/app.js"></script>
+  <footer class="container footer footer-store">
+    <div><strong data-brand-name>Northstar Goods</strong></div>
+    <div class="footer-links"><a href="shipping.html">Shipping</a><a href="returns.html">Returns</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></div>
+  </footer>
+
+  <div id="cart-overlay" class="cart-overlay"></div>
+  <aside class="cart-drawer" aria-label="Shopping cart">
+    <div class="cart-header"><div class="cart-title-row"><strong>Your cart</strong><button id="cart-close" class="cart-close">×</button></div></div>
+    <div id="cart-items" class="cart-items"></div>
+    <div class="cart-footer"><div class="cart-summary-row"><span>Subtotal</span><strong id="cart-subtotal">$0</strong></div><a class="button primary" href="contact.html" style="width:100%;">Proceed to checkout</a></div>
+  </aside>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
 </body>
 </html>
